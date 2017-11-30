@@ -1,8 +1,12 @@
 # BrachySourceKerma
 BrachySourceKerma calculates Kerma deposit in a water phantom, produced by a source defined using GDML files.
+
+Validation at my master's degree [dissertation](http://www1.inca.gov.br/pqrt/download/trab/dissertacao_mestrado_victor_gabriel_leandro_alves.pdf) (in Portuguese with english abstract)
+
+
 This code used the GDML auxiliary information for associating a sensitive detector to a volume.
 The detector construction consists of a call to GDMLProcessor which parses a GDML file and returns the pointer to the world volume.
-The scoring volumes use <paramvol> GDML tag to create indexed kerma results for each scoring ring.
+The scoring volumes use a GDML tag to create indexed kerma results for each scoring ring.
 
 GDML (Geometry Description Markup Language) is an XML schema for detector description.
 To use Geant4 and BrachySourceKerma needs to be built with GDML usage on (default true). For more
@@ -17,22 +21,24 @@ geometry in GDML format.
      to run it locally.
 
 Just save GDML SCHEMA *.xsd [files](http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema) inside a folder:
-        * gdml.xsd
-        * gdml_core.xsd
-        * gdml_define.xsd
-        * gdml_extensions.xsd
-        * gdml_materials.xsd
-        * gdml_parameterised.xsd
-        * gdml_replicas.xsd
-        * gdml_solids.xsd
+    * schema_files
+        + gdml.xsd
+        + gdml_core.xsd
+        + gdml_define.xsd
+        + gdml_extensions.xsd
+        + gdml_materials.xsd
+        + gdml_parameterised.xsd
+        + gdml_replicas.xsd
+        + gdml_solids.xsd
 
 
-See Gammamed_Plus_Source.gdml file for details.
-change the xsi:noNamespaceSchemaLocation at *.gdml header to:
+Take a look at Gammamed_Plus_Source.gdml file and change line 3:
+    - xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
-    xsi:noNamespaceSchemaLocation="/path/to/gdml.xsd"
+    to:
 
-reference: My master's degree [dissertation](http://www1.inca.gov.br/pqrt/download/trab/dissertacao_mestrado_victor_gabriel_leandro_alves.pdf) (in Portuguese with english abstract)
+    + xsi:noNamespaceSchemaLocation="/path/to/schema_files/gdml.xsd">
+
 
 ## Getting Started
 
@@ -110,7 +116,7 @@ TODO: [Test Driven Development](http://agiledata.org/essays/tdd.html)
 ## Built With
 
 * [CMAKE](https://cmake.org/)
-* [QT-Creator](https://en.wikipedia.org/wiki/Qt_Creator) - IDE
+* [QT-Creator](https://en.wikipedia.org/wiki/Qt_Creator)
 
 ## Contributing
 
@@ -132,5 +138,5 @@ This project is licensed under http://geant4.web.cern.ch/geant4/license/LICENSE.
 
 Thanks to:
 * The [GEANT4 developers](http://geant4.web.cern.ch/geant4/collaboration/contacts.shtml)
-* The best free C++ IDE if have found: [QT-creator Open Source IDE](https://www.qt.io/download-qt-for-application-development)
-* John Purcell's [free C++ course](https://www.udemy.com/free-learn-c-tutorial-beginners/) - Helped me understand many C++ details to refactor this code.
+* The best free C++ IDE if have found: [QT-creator Open Source](https://www.qt.io/download-qt-for-application-development)
+* John Purcell's [free C++ course](https://www.udemy.com/free-learn-c-tutorial-beginners/) - It helped me understand a lot of C++ details to refactor this code.

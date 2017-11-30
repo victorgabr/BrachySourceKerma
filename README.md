@@ -1,12 +1,7 @@
 # BrachySourceKerma
-
 BrachySourceKerma calculates Kerma deposit in a water phantom, produced by a source defined using GDML files.
-
 This code used the GDML auxiliary information for associating a sensitive detector to a volume.
-
-The detector construction consists of a call to GDMLProcessor which parses a
-GDML file and returns the pointer to the world volume.
-
+The detector construction consists of a call to GDMLProcessor which parses a GDML file and returns the pointer to the world volume.
 The scoring volumes use <paramvol> GDML tag to create indexed kerma results for each scoring ring.
 
 GDML (Geometry Description Markup Language) is an XML schema for detector description.
@@ -16,21 +11,20 @@ information please refer to the [GDML website](http://gdml.web.cern.ch/GDML) and
 
 This format is widely supported and other geometry software may be able to export
 geometry in GDML format.
-
-.. warning:: The Geant4 GDML parser used in BrachySourceKerma dynamically downloads the small
-             schema file at run time, so internet access is therefore required to
-             load GDML in BrachySourceKerma at run time. But you can download the GDML SCHEMA
-             to run it locally.
+     The Geant4 GDML parser used in BrachySourceKerma dynamically downloads the small
+     schema file at run time, so internet access is therefore required to
+     load GDML in BrachySourceKerma at run time. But you can download the GDML SCHEMA
+     to run it locally.
 
 Just save GDML SCHEMA *.xsd [files](http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema) inside a folder:
-        gdml.xsd
-        gdml_core.xsd
-        gdml_define.xsd
-        gdml_extensions.xsd
-        gdml_materials.xsd
-        gdml_parameterised.xsd
-        gdml_replicas.xsd
-        gdml_solids.xsd
+        * gdml.xsd
+        * gdml_core.xsd
+        * gdml_define.xsd
+        * gdml_extensions.xsd
+        * gdml_materials.xsd
+        * gdml_parameterised.xsd
+        * gdml_replicas.xsd
+        * gdml_solids.xsd
 
 
 See Gammamed_Plus_Source.gdml file for details.
@@ -62,7 +56,7 @@ Use CMakeLists.txt
 
 Easy way:
 
-Try using [cmake-qt-gui](https://launchpad.net/ubuntu/xenial/+package/cmake-qt-gui)
+Try it using [cmake-qt-gui](https://launchpad.net/ubuntu/xenial/+package/cmake-qt-gui)
 
 Hard way:
 
@@ -129,7 +123,6 @@ Any bug fixes or improvements are welcome.
 ## Author
     Victor Gabriel Leandro Alves, D.Sc.
     Copyright 2008-2017
-    [github](https://github.com/victorgabr)
 
 ## License
 

@@ -21,19 +21,19 @@ geometry in GDML format.
      to run it locally.
 
 Just save GDML SCHEMA *.xsd [files](http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema) inside a folder:
-    * schema_files
-        + gdml.xsd
-        + gdml_core.xsd
-        + gdml_define.xsd
-        + gdml_extensions.xsd
-        + gdml_materials.xsd
-        + gdml_parameterised.xsd
-        + gdml_replicas.xsd
-        + gdml_solids.xsd
 
+        +- /home/you/gdml_schema/
+            +- gdml.xsd
+            +- gdml_core.xsd
+            +- gdml_define.xsd
+            +- gdml_extensions.xsd
+            +- gdml_materials.xsd
+            +- gdml_parameterised.xsd
+            +- gdml_replicas.xsd
+            +- gdml_solids.xsd
 
 Take a look at Gammamed_Plus_Source.gdml file and change line 3:
-    - xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+    + xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
     to:
 

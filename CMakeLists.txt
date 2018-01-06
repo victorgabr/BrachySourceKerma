@@ -3,7 +3,12 @@
 cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project(BrachySourceKerma)
 
-#----------------------------------------------------------------------------
+# Requires C++11 standard
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+#-----------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
 # You can set WITH_GEANT4_UIVIS to OFF via the command line or ccmake/cmake-gui
 # to build a batch mode only executable

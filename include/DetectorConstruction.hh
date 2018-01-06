@@ -23,7 +23,7 @@
 // ********************************************************************
 //
 // --------------------------------------------------------------
-//                 GEANT 4 - BrachySourceKerma
+//                 GEANT4
 // --------------------------------------------------------------
 //
 // Code developed by:  Victor Gabriel Leandro Alves
@@ -37,12 +37,8 @@
 #ifndef DetectorConstruction_H
 #define DetectorConstruction_H 1
 
-#include "G4GDMLParser.hh"
-#include "G4VUserDetectorConstruction.hh"
-
-#include "G4Material.hh"
-
-#include "globals.hh"
+#include <G4GDMLParser.hh>
+#include <G4VUserDetectorConstruction.hh>
 
 class DetectorMessenger;
 
@@ -53,25 +49,46 @@ public:
     // Constructor and destructor
     //
     DetectorConstruction();
-    DetectorConstruction(const G4String& File);
+    DetectorConstruction(const G4String File);
     ~DetectorConstruction();
 
     // Volume Constructor Method
-
-    G4VPhysicalVolume* Construct();
+    G4VPhysicalVolume *Construct();
 
     // Writing and Reading GDML
-    //
-    void SetReadFile(const G4String& File);
+    G4int GetNumberOfScoreVolumes();
+
+    void readGDML();
+    void setScoring();
 
 private:
     // GDMLparser
-    //
     G4GDMLParser parser;
 
+    G4int nScoreVols;
     // Reading and Writing Settings
-    //
     G4String fReadFile;
+
+    // Reading and Writing Settings
+    const G4String _gdmlFile;
+    G4VPhysicalVolume *fWorldPhysVol;
+
+public:
+    // position mapping
+    // Output map - energy binning on x axis, theta on y
+    std::map<G4int, CLHEP::Hep3Vector> scorerPositions;
+    std::map<G4int, CLHEP::Hep3Vector> GetScorerPositions();
+
+    void DescriptionFcnPtr(G4VPhysicalVolume *aPV, G4int aDepth, G4int replicaNo,
+                           const G4Transform3D &aTransform);
+
+private:
+    void TraverseReplicas(G4VPhysicalVolume *aPV, G4int aDepth,
+                          const G4Transform3D &aTransform);
+
+    void DescribeAndDescendGeometry(G4VPhysicalVolume *aPV, G4int aDepth,
+                                    G4int replicaNo,
+                                    const G4Transform3D &aTransform);
 };
 
 // ----------------------------------------------------------------------------

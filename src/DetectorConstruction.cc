@@ -23,7 +23,7 @@
 // ********************************************************************
 //
 // --------------------------------------------------------------
-//                 GEANT 4 - BrachySourceKerma
+//                 GEANT 4
 // --------------------------------------------------------------
 //
 // Code developed by:  Victor Gabriel Leandro Alves
@@ -35,105 +35,56 @@
 //    *******************************
 
 #include "DetectorConstruction.hh"
-
-// Geant4 includes
-//
-#include "G4GeometryManager.hh"
-#include "G4VisAttributes.hh"
-#include "globals.hh"
-
-// Materials
-//
-#include "G4Material.hh"
-
-// Geometry includes
-
-#include "G4LogicalVolume.hh"
-#include "G4LogicalVolumeStore.hh"
-#include "G4VPhysicalVolume.hh"
-
-// GDML parser include
-//
-#include "G4GDMLParser.hh"
-#include "G4GDMLReadStructure.hh"
-
 // Scoring
+#include <G4PSCylinderSurfaceCurrent.hh>
+#include <G4PSEnergyDeposit.hh>
+#include <G4PSKermaTrackLength.hh>
+#include <G4SDManager.hh>
+#include <G4SDParticleFilter.hh> // Geant4 includes
 
-#include "G4MultiFunctionalDetector.hh"
-#include "G4PSCylinderSurfaceFlux.hh"
-#include "G4PSDoseDeposit.hh"
-#include "G4PSEnergyDeposit.hh"
-#include "G4PSKermaTrackLength.hh"
-#include "G4SDManager.hh"
-#include "G4TransportationManager.hh"
-#include "G4VSensitiveDetector.hh"
-
-#include <G4Version.hh>
-
-#include "G4Material.hh"
-#include "G4NistManager.hh"
-#include "globals.hh"
-
-DetectorConstruction::DetectorConstruction() {
-    fReadFile = "Dose_agua_MicroSelectron_V2_gdml";
+DetectorConstruction::DetectorConstruction(const G4String File)
+    : _gdmlFile(File) {
+    this->readGDML();
 }
 
-DetectorConstruction::DetectorConstruction(const G4String& File) {
-    fReadFile = File;
-}
-
-// ----------------------------------------------------------------------------
-//
-// Destructor
-//
 DetectorConstruction::~DetectorConstruction() {
     //    if(detectorMessenger) delete detectorMessenger;
 }
 
-// ----------------------------------------------------------------------------
-//
-// Constructs geometries and materials
-//
-G4VPhysicalVolume* DetectorConstruction::Construct() {
-    // Writing or Reading of Geometry using G4GDML
+G4VPhysicalVolume *DetectorConstruction::Construct() {
+    // set scoring using aux information fom GDML
+    setScoring();
+    return fWorldPhysVol;
+}
 
-    G4VPhysicalVolume* fWorldPhysVol;
-
+void DetectorConstruction::readGDML() {
     // **** LOOK HERE*** FOR READING GDML FILES
-    //
-    parser.Read(fReadFile);
-
-    //    G4cout << *(G4Material::GetMaterialTable()) << G4endl;
-
+    G4cout << "Reading GDML file: " << _gdmlFile << G4endl;
+    parser.Read(_gdmlFile);
+    G4cout << *(G4Material::GetMaterialTable()) << G4endl;
     // Giving World Physical Volume from GDML Parser
     //
     fWorldPhysVol = parser.GetWorldVolume();
+}
 
-    fWorldPhysVol->GetLogicalVolume()->SetVisAttributes(
-        G4VisAttributes::Invisible);
-
+void DetectorConstruction::setScoring() {
+    //--------------------------------------------- ------------------------------
+    // Scoring implementation
     //---------------------------------------------------------------------------
-
-    // Implementação das Classes de Scoring
-
-    //---------------------------------------------------------------------------
-
-    // Criando os scorers
-    G4MultiFunctionalDetector* detector =
+    // Detector pointer
+    G4MultiFunctionalDetector *detector =
         new G4MultiFunctionalDetector("MyDetector");
 
-    // Ajustando o ponteiro da classe SDManager
-    G4SDManager* manager = G4SDManager::GetSDMpointer();
+    //  SDManager pointer
+    G4SDManager *manager = G4SDManager::GetSDMpointer();
 
-    // Registrando o detector sensitivo no "manager"
-
+    // registering detector
     manager->AddNewDetector(detector);
 
     ///////////////////////////////////////////////////////////////////////
-    //
     // Example how to retrieve Auxiliary Information for sensitive detector
     //
-    const G4GDMLAuxMapType* auxmap = parser.GetAuxMap();
+    const G4GDMLAuxMapType *auxmap = parser.GetAuxMap();
     G4cout << "Found " << auxmap->size()
            << " volume(s) with auxiliary information." << G4endl << G4endl;
     for (G4GDMLAuxMapType::const_iterator iter = auxmap->begin();
@@ -161,13 +112,15 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
                        << " to volume " << ((*iter).first)->GetName() << G4endl
                        << G4endl;
 
-                G4VSensitiveDetector* mydet =
+                G4VSensitiveDetector *mydet =
                     manager->FindSensitiveDetector("MyDetector");
 
                 if (mydet) {
-                    G4LogicalVolume* myvol = (*iter).first;
+                    G4LogicalVolume *myvol = (*iter).first;
+
                     myvol->SetSensitiveDetector(mydet);
                     G4cout << "Sensisite detector was set " << G4endl;
+
                 } else {
                     G4cout << (*vit).value << " detector not found" << G4endl;
                 }
@@ -175,23 +128,13 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
         }
     }
 
-    //    G4PSDoseDeposit* scorer = new G4PSDoseDeposit("myScorer");
-    // G4PSEnergyDeposit* scorer = new G4PSEnergyDeposit("myScorer");
+    //using implemented track lenght estimator
+    G4PSKermaTrackLength *scorer = new G4PSKermaTrackLength("myScorer");
 
-    // Primitive scorer para o Kerma track length
-    G4PSKermaTrackLength* scorer = new G4PSKermaTrackLength("myScorer");
-
-    // Registrando o Scorer com o Detector...
-
+    // Registering scorer
     detector->RegisterPrimitive(scorer);
 
     G4cout << "Created G4MultiFunctionalDetector named " << detector->GetName()
-           << ", and a G4PSKermaTrackLength "
+           << ", and a G4SDParticleFilter "
            << "named " << scorer->GetName() << G4endl;
-
-    return fWorldPhysVol;
-}
-
-void DetectorConstruction::SetReadFile(const G4String& File) {
-    fReadFile = File;
 }

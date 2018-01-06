@@ -76,9 +76,7 @@ G4bool G4PSKermaTrackLength::ProcessHits(G4Step* aStep, G4TouchableHistory*) {
     G4VSolid* solid = 0;
 
     if (physParam) {  // for parameterized volume
-        G4int idx =
-            ((G4TouchableHistory*)(aStep->GetPreStepPoint()->GetTouchable()))
-            ->GetReplicaNumber(indexDepth);
+        G4int idx = ((G4TouchableHistory*)(aStep->GetPreStepPoint()->GetTouchable()))->GetReplicaNumber(indexDepth);
         solid = physParam->ComputeSolid(idx, physVol);
         solid->ComputeDimensions(physParam, idx, physVol);
     } else {  // for ordinary volume

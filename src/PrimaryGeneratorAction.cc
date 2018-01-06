@@ -47,17 +47,17 @@
 #include <stdlib.h>
 #include <time.h>
 //#include <iostream.h>
-#include <math.h>
 #include "G4PhysicalConstants.hh"
 #include "G4SystemOfUnits.hh"
+#include <math.h>
 //**************************************************************************
 
 PrimaryGeneratorAction::PrimaryGeneratorAction() {
     G4int n_particulas = 1;
     particleGun = new G4ParticleGun(n_particulas);
     // Definindo a tabela de particulas
-    G4ParticleTable* tabela = G4ParticleTable::GetParticleTable();
-    G4ParticleDefinition* particula = tabela->FindParticle("gamma");
+    G4ParticleTable *tabela = G4ParticleTable::GetParticleTable();
+    G4ParticleDefinition *particula = tabela->FindParticle("gamma");
     particleGun->SetParticleDefinition(particula);
 }
 
@@ -65,14 +65,14 @@ PrimaryGeneratorAction::~PrimaryGeneratorAction() {
     delete particleGun;
 }
 
-void PrimaryGeneratorAction::GeneratePrimaries(G4Event* umEvento) {
+void PrimaryGeneratorAction::GeneratePrimaries(G4Event *umEvento) {
     // Fundamentals of the Monte Carlo method for neutral and charged particle
     // transport Alex F Bielajew
 
     G4double R, radius, theta, x, y, z;
 
     // TODO replace hardcoded source geometry on particle generation
-    R = 0.325 * mm;  // souce radius
+    R = 0.325 * mm; // souce radius
 
     // Sorteio
 

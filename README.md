@@ -107,7 +107,8 @@ Note the Makefile and that all the scripts for running the BrachySourceKerma app
 [More details](https://geant4.web.cern.ch/geant4/UserDocumentation/UsersGuides/ForApplicationDeveloper/html/ch02s08.html)
 
 
-impossible way:  Windows platforms, please let me know if you can build and run it.
+## Windows build:
+  Tested on Windows 10, Qt5.10.0, MSVC-2017 64 bits. XercesC XLM Parser and ICU builded from source.
 
 ## Running the tests
 
@@ -139,4 +140,4 @@ This project is licensed under http://geant4.web.cern.ch/geant4/license/LICENSE.
 Thanks to:
 * The [GEANT4 developers](http://geant4.web.cern.ch/geant4/collaboration/contacts.shtml)
 * The best free C++ IDE if have found: [QT-creator Open Source](https://www.qt.io/download-qt-for-application-development)
-* John Purcell's [free C++ course](https://www.udemy.com/free-learn-c-tutorial-beginners/) - It helped me understand a lot of C++ details to refactor this code.
+* John Purcell's [free C++ course](https://www.udemy.com/free-learn-c-tutorial-beginners/) - It helped me to understand a lot of C++ details to refactor this code.

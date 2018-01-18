@@ -1,3 +1,4 @@
+//
 // ********************************************************************
 // * License and Disclaimer                                           *
 // *                                                                  *
@@ -21,74 +22,38 @@
 // * use  in  resulting  scientific  publications,  and indicate your *
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
-//
-// --------------------------------------------------------------
-//                 GEANT 4 - BrachySourceKerma
-// --------------------------------------------------------------
-//
-// Code developed by:  Victor Gabriel Leandro Alves
-// Copyright 2008-2017
-//    *******************************
-//    *                             *
-//    *    G4PSKermaTrackLength.hh                *
-//    *                             *
-//    *******************************
 
-#ifndef G4PSKermaTrackLength_h
-#define G4PSKermaTrackLength_h 1
+#ifndef KermaTrackLength3D_h
+#define KermaTrackLength3D_h 1
 
-#include "G4THitsMap.hh"
-#include "G4VPrimitiveScorer.hh"
+#include "KermaTrackLength.hh"
 
 ////////////////////////////////////////////////////////////////////////////////
 // (Description)
-//   This is a primitive scorer class for scoring track length.
+//   This is a primitive scorer class for scoring  kerma track length. into 3D
+// Voxels
 //
 //
-// Created: 2005-11-14  Tsukasa ASO, Akinori Kimura.
-// Modified: 2007-02-02 Tsukasa ASO, Add MultiplyKineticEnergy()
-//                                  and DivideByVelocity().
-//
+// Created: 2018-01-14 Victor Alves
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-class G4PSKermaTrackLength : public G4VPrimitiveScorer {
-public:  // with description
-    G4PSKermaTrackLength(G4String name, G4int depth = 0);
-    virtual ~G4PSKermaTrackLength();
+class KermaTrackLength3D : public KermaTrackLength {
 
-    inline void Weighted(G4bool flg = true) {
-        weighted = flg;
-    }
-    // Multiply track weight
+  public: // with description
+    KermaTrackLength3D(G4String name, G4int ni = 1, G4int nj = 1, G4int nk = 1,
+                       G4int depi = 2, G4int depj = 1, G4int depk = 0);
+    KermaTrackLength3D(G4String name, const G4String &unit, G4int ni = 1,
+                       G4int nj = 1, G4int nk = 1, G4int depi = 2,
+                       G4int depj = 1, G4int depk = 0);
 
-    inline void MultiplyKineticEnergy(G4bool flg = true) {
-        multiplyKinE = flg;
-    }
-    // Multiply Kinetic Energy
+    virtual ~KermaTrackLength3D();
 
-    inline void DivideByVelocity(G4bool flg = true) {
-        divideByVelocity = flg;
-    }
-    // Divide by velocity
+  protected: // with description
+    virtual G4int GetIndex(G4Step *);
 
-protected:  // with description
-    virtual G4bool ProcessHits(G4Step*, G4TouchableHistory*);
-
-public:
-    virtual void Initialize(G4HCofThisEvent*);
-    virtual void EndOfEvent(G4HCofThisEvent*);
-    virtual void clear();
-    virtual void DrawAll();
-    virtual void PrintAll();
-    G4double getUen(G4double en);
-
-private:
-    G4int HCID;
-    G4THitsMap<G4double>* EvtMap;
-    G4bool weighted;
-    G4bool multiplyKinE;
-    G4bool divideByVelocity;
+  private:
+    G4int fDepthi, fDepthj, fDepthk;
 };
 #endif

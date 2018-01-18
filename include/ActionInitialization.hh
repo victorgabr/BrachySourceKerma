@@ -1,3 +1,4 @@
+//
 // ********************************************************************
 // * License and Disclaimer                                           *
 // *                                                                  *
@@ -22,36 +23,22 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// --------------------------------------------------------------
-//                 DetectorConstruction.cc
-// --------------------------------------------------------------
+// Author: S. Guatelli, susanna@uow.edu.au
 //
-// Code developed by:  Victor Gabriel Leandro Alves
+#ifndef ActionInitialization_h
+#define ActionInitialization_h 1
 
-#include "DetectorConstruction.hh"
-#include <G4Material.hh>
-#include <G4StepPoint.hh>
-#include <G4VisAttributes.hh>
-#include <KermaTrackLength3D.hh>
+#include "G4VUserActionInitialization.hh"
 
-DetectorConstruction::DetectorConstruction() {}
+class G4GeneralParticleSource;
 
-DetectorConstruction::DetectorConstruction(const G4String File)
-    : fGDMLFile(File) {
-    // read gdml files at constructors
-    readGDML();
-}
+class ActionInitialization : public G4VUserActionInitialization {
+  public:
+    ActionInitialization();
+    virtual ~ActionInitialization();
 
-DetectorConstruction::~DetectorConstruction() {
-    //    if(detectorMessenger) delete detectorMessenger;
-}
+    virtual void BuildForMaster() const;
+    virtual void Build() const;
+};
 
-void DetectorConstruction::readGDML() {
-    // **** LOOK HERE*** FOR READING GDML FILES
-    fParser.Read(fGDMLFile, false);
-    G4cout << *(G4Material::GetMaterialTable()) << G4endl;
-    // Giving World Physical Volume from GDML Parser
-    fWorldPhysVol = fParser.GetWorldVolume();
-}
-
-G4VPhysicalVolume *DetectorConstruction::Construct() { return fWorldPhysVol; }
+#endif

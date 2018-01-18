@@ -23,55 +23,49 @@
 // ********************************************************************
 //
 // --------------------------------------------------------------
-//                 GEANT 4 - BrachySourceKerma
+//                 DetectorConstruction.hh
 // --------------------------------------------------------------
 //
 // Code developed by:  Victor Gabriel Leandro Alves
-// Copyright 2008-2017
-//    *******************************
-//    *                             *
-//    *    DetectorConstruction.hh                *
-//    *                             *
-//    *******************************
 
 #ifndef DetectorConstruction_H
 #define DetectorConstruction_H 1
 
-#include "G4GDMLParser.hh"
-#include "G4VUserDetectorConstruction.hh"
-
-#include "G4Material.hh"
-
-#include "globals.hh"
+#include <G4GDMLParser.hh>
+#include <G4VUserDetectorConstruction.hh>
 
 class DetectorMessenger;
 
 // ----------------------------------------------------------------------------
 
 class DetectorConstruction : public G4VUserDetectorConstruction {
-public:
+  public:
     // Constructor and destructor
     //
     DetectorConstruction();
-    DetectorConstruction(const G4String& File);
+    DetectorConstruction(const G4String File);
     ~DetectorConstruction();
+    //    void ConstructSDandField();
 
     // Volume Constructor Method
-
-    G4VPhysicalVolume* Construct();
+    G4VPhysicalVolume *Construct();
 
     // Writing and Reading GDML
-    //
-    void SetReadFile(const G4String& File);
+    G4int GetNumberOfScoreVolumes();
 
-private:
+    void readGDML();
+    void setScoring();
+
+  private:
     // GDMLparser
-    //
-    G4GDMLParser parser;
+    G4GDMLParser fParser;
 
     // Reading and Writing Settings
-    //
     G4String fReadFile;
+
+    // Reading and Writing Settings
+    const G4String fGDMLFile;
+    G4VPhysicalVolume *fWorldPhysVol;
 };
 
 // ----------------------------------------------------------------------------

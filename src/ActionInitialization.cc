@@ -1,3 +1,4 @@
+//
 // ********************************************************************
 // * License and Disclaimer                                           *
 // *                                                                  *
@@ -22,52 +23,43 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// --------------------------------------------------------------
-//                 GEANT 4 - BrachySourceKerma
-// --------------------------------------------------------------
-//
-// Code developed by:  Victor Gabriel Leandro Alves
-// Copyright 2008-2017
-//    *******************************
-//    *                             *
-//    *    RunAction.hh              *
-//    *                             *
-//    *******************************
-#ifndef RunAction_HH
-#define RunAction_HH
+// Author: S. Guatelli, susanna@uow.edu.au
+// Extended by Victor Alves
 
-#include <assert.h>
-#include "G4Run.hh"
+#include "ActionInitialization.hh"
 #include "G4RunManager.hh"
-#include "G4UnitsTable.hh"
-#include "Run.hh"
-#include "RunAction.hh"
+#include "PrimaryGeneratorAction.hh"
+#include "ScoreQuantityMessenger.hh"
+#include <G4ScoringManager.hh>
+#include <ScoreWriter.hh>
 
-#include "G4ConvergenceTester.hh"
-#include "G4UserRunAction.hh"
-#include "globals.hh"
+ActionInitialization::ActionInitialization() : G4VUserActionInitialization() {}
 
-class G4Run;
+ActionInitialization::~ActionInitialization() {}
 
-class RunAction : public G4UserRunAction {
-public:
-    // Constructor
-    RunAction();
+void ActionInitialization::BuildForMaster() const {
+    // In MT mode, to be clearer, the RunAction class for the master thread
+    // might be
+    // different than the one used for the workers.
+    // This RunAction will be called before and after starting the
+    // workers.
+    // Virtual method to be implemented by the user to instantiate user run
+    // action
+    // class object to be used by G4MTRunManager. This method is not invoked in
+    // the sequential mode. The user should not use this method to instantiate
+    // user action classes rather than user run action.
+}
 
-    // Destructor
-    virtual ~RunAction();
-
-    // Methods
-    virtual G4Run* GenerateRun();
-
-    void BeginOfRunAction(const G4Run*);
-    void EndOfRunAction(const G4Run*);
-    void fillPerEvent(G4double);
-
-private:
-//    G4double sumEAbs, sum2EAbs;
-
-//    G4ConvergenceTester* Eabs_tally;
-};
-
-#endif
+void ActionInitialization::Build() const {
+    // Initialize the primary particles
+    PrimaryGeneratorAction *primary = new PrimaryGeneratorAction();
+    SetUserAction(primary);
+    // Setting up messenger class at a tread-local class
+    // refer to
+    // https://twiki.cern.ch/twiki/bin/view/Geant4/QuickMigrationGuideForGeant4V10
+    auto *pScoringManager = G4ScoringManager::GetScoringManagerIfExist();
+    // using  own messenger
+    // Overwrite the default output file with user-defined one
+    auto *pSQM = new ScoreQuantityMessenger(pScoringManager);
+    pScoringManager->SetScoreWriter(new ScoreWriter());
+}

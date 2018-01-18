@@ -1,3 +1,5 @@
+
+//
 // ********************************************************************
 // * License and Disclaimer                                           *
 // *                                                                  *
@@ -22,37 +24,34 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// --------------------------------------------------------------
-//                 GEANT 4 - BrachySourceKerma
-// --------------------------------------------------------------
 //
-// Code developed by:  Victor Gabriel Leandro Alves
-// Copyright 2008-2017
-//    *******************************
-//    *                             *
-//    *    PrimaryGeneratorAction.cc                *
-//    *                             *
-//    *******************************z
+// $Id: PrimaryGeneratorAction.hh 84280 2014-10-13 07:21:10Z gcosmo $
+//
+//    ********************************************
+//    *                                          *
+//    *      PrimaryGeneratorAction.hh     *
+//    *                                          *
+//    ********************************************
+//
 
 #ifndef PrimaryGeneratorAction_h
-#define PrimmaryGeneratorAction_h 1
+#define PrimaryGeneratorAction_h 1
 
-#include "G4VUserPrimaryGeneratorAction.hh"
 #include "globals.hh"
+#include <G4VUserPrimaryGeneratorAction.hh>
 
-class G4ParticleGun;
-class G4Event;
+class G4GeneralParticleSource;
 
 class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction {
-public:
+  public:
     PrimaryGeneratorAction();
     ~PrimaryGeneratorAction();
 
-public:
-    void GeneratePrimaries(G4Event*);
+  public:
+    void GeneratePrimaries(G4Event *anEvent);
+    G4double getParticleEnergy();
 
-private:
-    G4ParticleGun* particleGun;
+  private:
+    G4GeneralParticleSource *gun;
 };
-
 #endif

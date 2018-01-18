@@ -54,12 +54,11 @@ PhysicsList::PhysicsList() : G4VModularPhysicsList() {
     SetVerboseLevel(1);
 
     // EM physics: 3 alternatives
-
-    // emPhysicsList = new G4EmStandardPhysics_option4(1);
+    emPhysicsList = new G4EmStandardPhysics_option4(1);
 
     // Alternatively you can substitute this physics list
     // with the LowEnergy Livermore or LowEnergy Penelope:
-    emPhysicsList = new G4EmLivermorePhysics();
+    //    emPhysicsList = new G4EmLivermorePhysics();
     // Low Energy based on Livermore Evaluated Data Libraries
     //
     // Penelope physics
@@ -76,9 +75,7 @@ PhysicsList::~PhysicsList() {
     delete emPhysicsList;
 }
 
-void PhysicsList::ConstructParticle() {
-    decPhysicsList->ConstructParticle();
-}
+void PhysicsList::ConstructParticle() { decPhysicsList->ConstructParticle(); }
 
 void PhysicsList::ConstructProcess() {
     AddTransportation();
@@ -110,8 +107,9 @@ void PhysicsList::SetCuts() {
     G4double highLimit = 100. * GeV;
 
     G4ProductionCutsTable::GetProductionCutsTable()->SetEnergyRange(lowLimit,
-            highLimit);
+                                                                    highLimit);
 
     // Print the cuts
-    if (verboseLevel > 0) DumpCutValuesTable();
+    if (verboseLevel > 0)
+        DumpCutValuesTable();
 }

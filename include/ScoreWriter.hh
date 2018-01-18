@@ -1,3 +1,4 @@
+//
 // ********************************************************************
 // * License and Disclaimer                                           *
 // *                                                                  *
@@ -22,56 +23,35 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// --------------------------------------------------------------
-//                 GEANT 4 - BrachySourceKerma
-// --------------------------------------------------------------
 //
-// Code developed by:  Victor Gabriel Leandro Alves
-// Copyright 2008-2017
-//    *******************************
-//    *                             *
-//    *    RunAction.c              *
-//    *                             *
-//    *******************************
-#include "RunAction.hh"
-#include <assert.h>
-#include "G4Run.hh"
-#include "G4RunManager.hh"
-#include "G4UnitsTable.hh"
-#include "Run.hh"
+#ifndef ScoreWriter_h
+#define ScoreWriter_h 1
 
-RunAction::RunAction() {}
+#include "G4VScoreWriter.hh"
+#include "globals.hh"
+/*
+// Code developed by:
+// Victor Gabriel Leandro Alves, victorgabr@gmail.com
+//
+Original code from geant4/examples/extended/runAndEvent/RE03,
+// by M. Asai
+*/
+//
+// class description:
+//
+// This class represents storing the scored quantity into a file.
+//
+class ScoreWriter : public G4VScoreWriter {
+  public:
+    ScoreWriter();
+    virtual ~ScoreWriter();
+    // store a quantity into a file
+    void DumpQuantityToFile(const G4String &psName, const G4String &fileName,
+                            const G4String &option);
 
-RunAction::~RunAction() {}
+    void DumpSpectraToFile(const G4String &psName, const G4String &fileName,
+                           const G4String &option);
 
-void RunAction::BeginOfRunAction(const G4Run*) {
-    //    sumEAbs = 0.;
-    //    Eabs_tally = new G4ConvergenceTester();
-}
-
-G4Run* RunAction::GenerateRun() {
-    G4cout << "Creating user define run class Run" << G4endl;
-    return new Run("MyDetector");
-}
-
-//void RunAction::fillPerEvent(G4double EAbs) {
-//    // accumulate statistic
-//    //    sumEAbs += EAbs;
-//    //    sum2EAbs += EAbs * EAbs;
-
-//    //    Eabs_tally->AddScore(EAbs);
-//}
-
-void RunAction::EndOfRunAction(const G4Run* aRun) {
-    // Print interesting data
-    G4cout << "Number of Events Processed:" << aRun->GetNumberOfEvent()
-           << " events. " << G4endl;
-
-    const Run* theRun = dynamic_cast<const Run*>(aRun);
-    assert(0 != theRun);
-
-    theRun->DumpData();
-
-    G4int NbOfEvents = aRun->GetNumberOfEvent();
-    if (NbOfEvents == 0) return;
-}
+    G4int GetIndexNumpy(G4int x, G4int y, G4int z) const;
+};
+#endif

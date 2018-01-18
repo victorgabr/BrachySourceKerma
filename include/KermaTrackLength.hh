@@ -30,41 +30,52 @@
 // Copyright 2008-2017
 //    *******************************
 //    *                             *
-//    *    Run.hh                *
+//    *    KermaTrackLength.hh                *
 //    *                             *
 //    *******************************
-#ifndef Run_HH
-#define Run_HH
 
-#include <map>
-#include "G4Event.hh"
-#include "G4Run.hh"
+#ifndef KermaTrackLength_h
+#define KermaTrackLength_h 1
+
 #include "G4THitsMap.hh"
+#include "G4VPrimitiveScorer.hh"
 
-class G4Event;
+//#include <G4NistManager.hh>
 
-class Run : public G4Run {
-public:
-    // Constructor
-    Run(const G4String& detectorName);
+class KermaTrackLength : public G4VPrimitiveScorer {
+  public: // with description
+    KermaTrackLength(G4String name, G4int depth = 0);
+    KermaTrackLength(G4String name, const G4String &unit, G4int depth = 0);
+    virtual ~KermaTrackLength();
 
-    // Destructor
-    virtual ~Run();
+  protected: // with description
+    virtual G4bool ProcessHits(G4Step *, G4TouchableHistory *);
+    virtual G4double ComputeVolume(G4Step *aStep, G4int idx);
 
-public:
-    // Override this method in G4Run
-    virtual void RecordEvent(const G4Event*);
+  public:
+    virtual void Initialize(G4HCofThisEvent *);
+    virtual void EndOfEvent(G4HCofThisEvent *);
+    virtual void clear();
+    virtual void DrawAll();
+    virtual void PrintAll();
+    virtual void SetUnit(const G4String &unit);
+    //    G4double calc
+    G4double getUen(G4double en);
 
-    // Dump all data
-    void DumpData() const;
+    G4double calcMassAttenuationTotal(G4double energy, G4Material *mat);
 
-private:
-    // Helper function
-    void Print(const std::vector<G4String>& title,
-               const std::map<G4int, std::vector<G4double> >& out) const;
+    // TODO Mass energy absorption coefficient prototypes
+    G4double calcMassEnergyAbsorptionCoefficient(G4double Z, G4double uTotal);
+    G4double calcUenZ19(G4double Z, G4double uTotal);
+    G4double calcUenZ1028(G4double Z, G4double uTotal);
+    G4double calcUenZ2938(G4double Z, G4double uTotal);
+    G4double calcUenZ3970(G4double Z, G4double uTotal);
+    G4double calcUenZ7192(G4double Z, G4double uTotal);
 
-    // Data member
-    std::map<G4int, G4THitsMap<G4double>*> fMap;
+  private:
+    G4int HCID;
+    G4THitsMap<G4double> *EvtMap;
+    // nist Material Manager
+    //    G4NistManager *_matManager = G4NistManager::Instance();
 };
-
 #endif

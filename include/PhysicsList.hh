@@ -40,20 +40,19 @@ Author: Susanna Guatelli
 
 // Modular physics used in this application
 class PhysicsList : public G4VModularPhysicsList {
-public:
+  public:
     PhysicsList();
     ~PhysicsList();
     void ConstructParticle();
     // void AddPhysicsList(const G4String& name);
     void ConstructProcess();
 
-protected:
+  protected:
     void SetCuts();
 
-private:
-    G4VPhysicsConstructor* emPhysicsList;
-    G4VPhysicsConstructor* decPhysicsList;
-    G4VPhysicsConstructor* radDecayPhysicsList;
+  private:
+    G4VPhysicsConstructor *emPhysicsList;
+    G4VPhysicsConstructor *decPhysicsList;
+    G4VPhysicsConstructor *radDecayPhysicsList;
 };
 #endif
-

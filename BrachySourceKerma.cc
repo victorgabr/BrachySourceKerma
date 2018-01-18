@@ -51,11 +51,8 @@
 #include "G4VisExecutive.hh"
 #endif
 
-int main(int argc, char** argv) {
-    // Construct the default run manager
-    //
-    G4RunManager* runManager = new G4RunManager;
-    // G4VisManager* visManager = new G4VisExecutive;
+
+int main(int argc, char **argv) {
 
     CLHEP::HepRandom::setTheEngine(new CLHEP::RanecuEngine);
     // Set the random number generator manually
@@ -64,34 +61,41 @@ int main(int argc, char** argv) {
     CLHEP::HepRandom::setTheSeed(myseed);
 
     // Set mandatory initialization and user action classes
-    G4String fileName = argv[1];
-    DetectorConstruction* detector = new DetectorConstruction(fileName);
+    const G4String fileName = static_cast<G4String>(argv[1]);
 
+    DetectorConstruction *detector = new DetectorConstruction(fileName);
+
+    // Start Run manager
+    G4RunManager *runManager = new G4RunManager;
     runManager->SetUserInitialization(detector);
     runManager->SetUserInitialization(new PhysicsList);
-    runManager->SetUserAction(new PrimaryGeneratorAction);
-    RunAction* runAction = new RunAction;
+    PrimaryGeneratorAction *particleGun = new PrimaryGeneratorAction;
+    runManager->SetUserAction(particleGun);
+    // using output filename
+    RunAction *runAction = new RunAction;
     runManager->SetUserAction(runAction);
     runManager->Initialize();
 
 #ifdef G4VIS_USE
     // Initialize visualization
-    G4VisManager* visManager = new G4VisExecutive;
+    G4VisManager *visManager = new G4VisExecutive;
     // G4VisExecutive can take a verbosity argument - see /vis/verbose guidance.
     // G4VisManager* visManager = new G4VisExecutive("Quiet");
     visManager->Initialize();
 #endif
 
     // Get the pointer to the User Interface manager
-    G4UImanager* UImanager = G4UImanager::GetUIpointer();
+    G4UImanager *UImanager = G4UImanager::GetUIpointer();
 
 // interactive mode : define UI session
 #ifdef G4UI_USE
-    G4UIExecutive* ui = new G4UIExecutive(argc, argv);
+    G4UIExecutive *ui = new G4UIExecutive(argc, argv);
 #ifdef G4VIS_USE
+    //    UImanager->ApplyCommand("/control/execute proton_source.mac");
+    //    G4double en = particleGun->getParticleEnergy();
     UImanager->ApplyCommand("/control/execute vis.mac");
 #else
-    UImanager->ApplyCommand("/control/execute vis.mac");
+    UImanager->ApplyCommand("/control/execute " + macroFilename);
 #endif
     ui->SessionStart();
     delete ui;

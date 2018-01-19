@@ -13,46 +13,28 @@ To use Geant4 and BrachySourceKerma needs to be built with GDML usage on (defaul
 information please refer to the [GDML website](http://gdml.web.cern.ch/GDML) and
 [manual](http://gdml.web.cern.ch/GDML/doc/GDMLmanual.pdf).
 
-This format is widely supported and other geometry software may be able to export
-geometry in GDML format.
-     The Geant4 GDML parser used in BrachySourceKerma dynamically downloads the small
-     schema file at run time, so internet access is therefore required to
-     load GDML in BrachySourceKerma at run time. But you can download the GDML SCHEMA
-     to run it locally.
-
-Just save GDML SCHEMA *.xsd [files](http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema) inside a folder:
-
-        +- /home/you/gdml_schema/
-            +- gdml.xsd
-            +- gdml_core.xsd
-            +- gdml_define.xsd
-            +- gdml_extensions.xsd
-            +- gdml_materials.xsd
-            +- gdml_parameterised.xsd
-            +- gdml_replicas.xsd
-            +- gdml_solids.xsd
-
-Take a look at Gammamed_Plus_Source.gdml file and change line 3:
-    + xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
-
-    to:
-
-    + xsi:noNamespaceSchemaLocation="/path/to/schema_files/gdml.xsd">
-
 
 ## Getting Started
 
-
     ./BrachySourceKerma Gammamed_Plus_Source.gdml
 
+Run python script inside build folder.
 
-It saves output.csv file containing kerma results for each scoring ring.
+     python data_analysis.py 
+
+It reads KermaDeposition.csv file containing the resulted 3D kerma matrix.
+
+## Example result:
+
+![example_result](https://user-images.githubusercontent.com/6777517/35172841-6939db5e-fd50-11e7-9616-74b964d66afe.jpg)
 
 ### Prerequisites
 
 Build GEANT4 10.x with GDML and QT suport.
 
 See details at [GEANT4 documentation](https://geant4.web.cern.ch/geant4/UserDocumentation/UsersGuides/InstallationGuide/html/ch02.html).
+
+requirements: [pandas](https://pandas.pydata.org/) and [matplotlib](https://matplotlib.org/)  
 
 ### Installing
 

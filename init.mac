@@ -12,7 +12,7 @@
 /run/verbose 2
 /score/verbose 0
 
-/run/beamOn 10000
+/run/beamOn 1000000
 
 # dump scorer to file
 #/score/dumpQuantityToFile boxMesh dose DoseDeposition.csv

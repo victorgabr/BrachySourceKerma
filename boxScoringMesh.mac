@@ -2,8 +2,8 @@
 #  the energy deposition in the phantom
 /score/create/boxMesh boxMesh
 # the voxels are 0.25 mm wide.
-/score/mesh/boxSize 5 5 0.125 mm
-/score/mesh/nBin 40 40 1
+/score/mesh/boxSize 10 10 10 mm
+/score/mesh/nBin 80 80 80
 
 #/score/quantity/doseDeposit dose
 /score/quantity/kermaTrackLength kerma

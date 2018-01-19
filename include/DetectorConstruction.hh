@@ -49,12 +49,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
 
     // Volume Constructor Method
     G4VPhysicalVolume *Construct();
-
-    // Writing and Reading GDML
-    G4int GetNumberOfScoreVolumes();
-
     void readGDML();
-    void setScoring();
 
   private:
     // GDMLparser

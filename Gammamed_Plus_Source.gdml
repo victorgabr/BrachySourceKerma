@@ -1,227 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
-
-    <define>
-      <variable name="r" value="0"/>
-	  <constant name="num" value="34"/>
-	  <position name="Origem" x="0" y="0" z="0"/>
-	  <position name="OrigemDesl" x="0" y="0" z="-0.05"/>
-	  <position name="Ptsup" x="0" y="0" z="-2.16"/>
-	  <position name="PosInf" x="0" y="0" z="1.9"/>
-	  <position name="PosCabo" x="0" y="0" z="3.65"/>
-	  <variable name="SD" value="0" />  
-	  	  <variable name="Ir" value="0" />  
-    </define>
-
-    <materials>
-		<element Z="7" formula="N" name="Nitrogen" >
-	   		<atom value="14.1" />
-		 </element>
-	 	 <element Z="8" formula="O" name="Oxygen" >
-	 		<atom value="16" />
-		</element>
-		 <element Z="1" formula="H" name="Hydrogen" >
-	   			<atom value="1.01" />
-		   </element>
-		   	  <element Z="25" formula="Mn" name="Manganese" >
-	   <atom value="54.94" />
-	 </element>
-	  <element Z="14" formula="Si" name="Silicon" >
-	   <atom value="28.09" />
-	 </element>
-	  <element Z="24" formula="Cr" name="Chromium" >
-	   <atom value="52.00" />
-	 </element>
-	  <element Z="28" formula="Ni" name="Nickel" >
-	   <atom value="58.7" />
-	 </element>
-	 <element Z="26" formula="Fe" name="Iron" >
-	   <atom value="55.85" />
-	 </element>
-	  <element Z="6" formula="C" name="Carbon" >
-	   <atom value="12.0107 " />
-	 </element>
-	 
-      <material Z="1.0" name="AIR">
-        <D value="1e-25"/>
-        <atom value="1.00794"/>
-		</material>
-     <material formula="H2O" name="Water" >
-		<D value=".998" />
-		<fraction n="0.111898" ref="Hydrogen" />
-		<fraction n="0.888102" ref="Oxygen" />
-	</material>
-
-  <material formula="PMMA" name="Acrilico" >
-		<D value="1.190" />
-		<fraction n="0.080541" ref="Hydrogen" />
-		<fraction n="0.599846" ref="Carbon" />
-		<fraction n="0.319613" ref="Oxygen" />
-	</material>
-
- <material formula="air" name="Air" >
-	 <D value="0.0012899999999999999" />
-	 <fraction n="0.7" ref="Nitrogen" />
-	 <fraction n="0.3" ref="Oxygen" />
-  </material>
-  <material name="Ir192" Z="77	">
-	<D value="22.42"/>
-<atom value="191.96260"/>
-  </material>
- <material formula="AISI321" name="AcInox" >
-	 <D value="7.9" />
-	 <fraction n="0.02" ref="Manganese" />
-	 <fraction n="0.01" ref="Silicon" />
-	 <fraction n="0.18" ref="Chromium" />
-	 <fraction n="0.10" ref="Nickel" />
-	 <fraction n="0.69" ref="Iron" /> 
-  </material>
-  <material formula="AISI304" name="AcInoxCabo" >
-	 <D value="5.6" />
-	 	<fraction n="0.02" ref="Manganese" />
-	 	<fraction n="0.02" ref="Silicon" />
-	 	<fraction n="0.18" ref="Chromium" />
-	 	<fraction n="0.09" ref="Nickel" />
-	 	<fraction n="0.69" ref="Iron" /> 
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+  <define>
+    <variable name="r" value="0"/>
+    <constant name="num" value="34"/>
+    <position name="Origem" x="0" y="0" z="0"/>
+    <position name="OrigemDesl" x="0" y="0" z="-0.05"/>
+    <position name="Ptsup" x="0" y="0" z="-2.16"/>
+    <position name="PosInf" x="0" y="0" z="1.9"/>
+    <position name="PosCabo" x="0" y="0" z="3.65"/>
+    <variable name="SD" value="0" />
+    <variable name="Ir" value="0" />
+  </define>
+  <materials>
+    <element Z="7" formula="N" name="Nitrogen" >
+      <atom value="14.1" />
+    </element>
+    <element Z="8" formula="O" name="Oxygen" >
+      <atom value="16" />
+    </element>
+    <element Z="1" formula="H" name="Hydrogen" >
+      <atom value="1.01" />
+    </element>
+    <element Z="25" formula="Mn" name="Manganese" >
+      <atom value="54.94" />
+    </element>
+    <element Z="14" formula="Si" name="Silicon" >
+      <atom value="28.09" />
+    </element>
+    <element Z="24" formula="Cr" name="Chromium" >
+      <atom value="52.00" />
+    </element>
+    <element Z="28" formula="Ni" name="Nickel" >
+      <atom value="58.7" />
+    </element>
+    <element Z="26" formula="Fe" name="Iron" >
+      <atom value="55.85" />
+    </element>
+    <element Z="6" formula="C" name="Carbon" >
+      <atom value="12.0107 " />
+    </element>
+    <material Z="1.0" name="AIR">
+      <D value="1e-25"/>
+      <atom value="1.00794"/>
     </material>
-   </materials>
+    <material formula="H2O" name="Water" >
+      <D value=".998" />
+      <fraction n="0.111898" ref="Hydrogen" />
+      <fraction n="0.888102" ref="Oxygen" />
+    </material>
+    <material formula="PMMA" name="Acrilico" >
+      <D value="1.190" />
+      <fraction n="0.080541" ref="Hydrogen" />
+      <fraction n="0.599846" ref="Carbon" />
+      <fraction n="0.319613" ref="Oxygen" />
+    </material>
+    <material formula="air" name="Air" >
+      <D value="0.0012899999999999999" />
+      <fraction n="0.7" ref="Nitrogen" />
+      <fraction n="0.3" ref="Oxygen" />
+    </material>
+    <material name="Ir192" Z="77	">
+      <D value="22.42"/>
+      <atom value="191.96260"/>
+    </material>
+    <material formula="AISI321" name="AcInox" >
+      <D value="7.9" />
+      <fraction n="0.02" ref="Manganese" />
+      <fraction n="0.01" ref="Silicon" />
+      <fraction n="0.18" ref="Chromium" />
+      <fraction n="0.10" ref="Nickel" />
+      <fraction n="0.69" ref="Iron" />
+    </material>
+    <material formula="AISI304" name="AcInoxCabo" >
+      <D value="5.6" />
+      <fraction n="0.02" ref="Manganese" />
+      <fraction n="0.02" ref="Silicon" />
+      <fraction n="0.18" ref="Chromium" />
+      <fraction n="0.09" ref="Nickel" />
+      <fraction n="0.69" ref="Iron" />
+    </material>
+  </materials>
+  <solids>
+    <box name="WorldBox" lunit="m" x="3" y="3" z="3" />
+    <tube name  = "Nucleo"   rmin="0" rmax=".35" z="3.5" deltaphi="2*pi" startphi="0" aunit="rad" lunit= "mm"/>
+    <tube name  = "Encapsulamento" rmin="0" rmax="0.45" z="3.6" deltaphi="2*pi" startphi="0" aunit="rad" lunit= "mm"/>
+    <tube name  = "Tampasup" rmin="0" rmax="0.45" z="0.62" deltaphi="2*pi" startphi="0" aunit="rad" lunit= "mm"/>
+    <tube name  = "TampaInf" rmin="0" rmax="0.45" z="0.3" deltaphi="2*pi" startphi="0" aunit="rad" lunit= "mm"/>
+    <tube name  = "Cabo"   rmin="0" rmax=".35" z="3.5" deltaphi="2*pi" startphi="0" aunit="rad" lunit= "mm"/>
+    <tube name="fantoma" rmin="0" rmax="250" deltaphi="360" z="250" aunit="deg" lunit="mm"/>
+    <!-- <box name="fantoma" lunit="mm" x="350" y="350" z="350"/> -->
 
-    <solids>
-      <box name="WorldBox" lunit="cm" x="100" y="100" z="100" />
-		  <tube name  = "Nucleo"   rmin="0" rmax=".35" z="3.5" deltaphi="2*pi" startphi="0" aunit="rad" lunit= "mm"/>
-		  <tube name  = "Encapsulamento" rmin="0" rmax="0.45" z="3.6" deltaphi="2*pi" startphi="0" aunit="rad" lunit= "mm"/>
-		  <tube name  = "Tampasup" rmin="0" rmax="0.45" z="0.62" deltaphi="2*pi" startphi="0" aunit="rad" lunit= "mm"/>
-		  <tube name  = "TampaInf" rmin="0" rmax="0.45" z="0.3" deltaphi="2*pi" startphi="0" aunit="rad" lunit= "mm"/>	
-		  <tube name  = "Cabo"   rmin="0" rmax=".35" z="3.5" deltaphi="2*pi" startphi="0" aunit="rad" lunit= "mm"/>	
-		  <tube name="fantoma" rmin="0.45" rmax="250" deltaphi="360" z="250" aunit="deg" lunit="mm"/>
- 		 <tube name="aneis" rmin=".45" rmax="2000" deltaphi="360" z="200" aunit="deg" lunit="mm"/>
-    </solids>
-
-   <structure>
-
-	     <volume name="Ir192Core">
-   			<materialref ref="Ir192"/>
-		   <solidref ref="Nucleo"/>
-		     <auxiliary auxtype="fonte" auxvalue="Ir"/>
-		</volume>
-
-		<volume name="Capa">
-   			<materialref ref="AcInox"/>
-   			<solidref ref="Encapsulamento"/>
-		</volume>
-
-		<volume name="TampaSuperior">
-			  <materialref ref="AcInox"/>
-   			<solidref ref="Tampasup"/>
-		</volume>
-		<volume name="TampaInferior">
-   			<materialref ref="AcInox"/>
-   			<solidref ref="TampaInf"/>
-		</volume>
-		<volume name="CaboAco">
-   			<materialref ref="AcInoxCabo"/>
-   			<solidref ref="Cabo"/>
-		</volume>
-<volume name="Aneis">
- <materialref ref="Water" />
-  <solidref ref="aneis" />
-  	     <auxiliary auxtype="SensDet" auxvalue="SD"/>
-</volume>
-
-
-  
- <volume name="Fantoma" >
-   <materialref ref="Water" />
-   <solidref ref="fantoma" />
-
- <paramvol ncopies="11" >
-	<volumeref ref="Aneis" />
- 	     
-    		<parameterised_position_size>	
-	     		<parameters number="1" >
-	     		<position name="anel1" x="0" y="0" z="0"/>
-      				<tube_dimensions  aunit="deg" lunit="mm" InR="7" OutR="7.1" hz="0.1" StartPhi="0." DeltaPhi="360" />
-    		 </parameters>
-    		 	<parameters number="2" >
-    		 	<position name="anel2" x="0" y="0" z="0"/>
-      				<tube_dimensions  aunit="deg" lunit="mm" InR="8" OutR="8.1" hz="0.1" StartPhi="0." DeltaPhi="360" />
-    		 </parameters>	
-    		 	<parameters number="3" >
-    		 	<position name="anel3" x="0" y="0" z="0"/>
-      				<tube_dimensions  aunit="deg" lunit="mm" InR="9" OutR="9.1" hz="0.1" StartPhi="0." DeltaPhi="360" />
-    		 </parameters>	
-    		 	<parameters number="4" >
-    		 	<position name="anel4" x="0" y="0" z="0"/>
-      				<tube_dimensions  aunit="deg" lunit="mm" InR="10" OutR="10.1" hz="0.1" StartPhi="0." DeltaPhi="360" />
-    		 </parameters>	
-    		 	<parameters number="5" >
-    		 	<position name="anel5" x="0" y="0" z="0"/>
-      				<tube_dimensions  aunit="deg" lunit="mm" InR="10.1" OutR="10.6" hz="0.5" StartPhi="0." DeltaPhi="360" />
-    		 </parameters>	
-    		 	<parameters number="6" >
-    		 	<position name="anel6" x="0" y="0" z="0"/>
-      				<tube_dimensions  aunit="deg" lunit="mm" InR="20" OutR="20.5" hz="0.5" StartPhi="0." DeltaPhi="360" />
-    		 </parameters>
-    		 	<parameters number="7" >
-    		 	<position name="anel7" x="0" y="0" z="0"/>
-      				<tube_dimensions  aunit="deg" lunit="mm" InR="30" OutR="30.5" hz="0.5" StartPhi="0." DeltaPhi="360" />
-    		 </parameters>	
-    		 	<parameters number="8" >
-    		 	<position name="anel8" x="0" y="0" z="0"/>
-      				<tube_dimensions  aunit="deg" lunit="mm" InR="40" OutR="40.5" hz="0.5" StartPhi="0." DeltaPhi="360" />
-    		 </parameters>	
-    		 	<parameters number="9" >
-    		 	<position name="anel9" x="0" y="0" z="0"/>
-      				<tube_dimensions  aunit="deg" lunit="mm" InR="50" OutR="50.5" hz="0.5" StartPhi="0." DeltaPhi="360" />
-    		 </parameters>	
-    		 	<parameters number="10" >
-    		 	<position name="anel10" x="0" y="0" z="0"/>
-      				<tube_dimensions  aunit="deg" lunit="mm" InR="60" OutR="61" hz="1" StartPhi="0." DeltaPhi="360" />
-    		 </parameters>	
-    		 	<parameters number="11" >
-    		 	<position name="anel11" x="0" y="0" z="0"/>
-      				<tube_dimensions  aunit="deg" lunit="mm" InR="70" OutR="71" hz="1" StartPhi="0." DeltaPhi="360" />
-    		 </parameters>
-    		 
-    </parameterised_position_size>
- 	
- 
-  </paramvol>
-
- </volume>
-
-
-	<volume name="TOP">
-        <materialref ref="Air"/>
-        <solidref ref="WorldBox"/>
-		<physvol>
-     		<volumeref ref="Ir192Core"/>
-     		<positionref ref="Origem"/>
-		</physvol>
-		<physvol>
-     		<volumeref ref="Capa"/>
-     		<positionref ref="OrigemDesl"/>
-   		</physvol>
-		<physvol>
-     		<volumeref ref="TampaSuperior"/>
-     		<positionref ref="Ptsup"/>
- 		</physvol>  
-		<physvol>
-     		<volumeref ref="TampaInferior"/>
-     		<positionref ref="PosInf"/>
- 		</physvol>  
-		<physvol>
-     		<volumeref ref="CaboAco"/>
-     		<positionref ref="PosCabo"/>
- 		</physvol>  
-          <physvol>
-	    	  	<volumeref ref="Fantoma"/>
-     		 </physvol>
-      
+  </solids>
+  <structure>
+    <volume name="Ir192Core">
+      <materialref ref="Ir192"/>
+      <solidref ref="Nucleo"/>
+      <auxiliary auxtype="fonte" auxvalue="Ir"/>
+    </volume>
+    <volume name="Capa">
+      <materialref ref="AcInox"/>
+      <solidref ref="Encapsulamento"/>
+    </volume>
+    <volume name="TampaSuperior">
+      <materialref ref="AcInox"/>
+      <solidref ref="Tampasup"/>
+    </volume>
+    <volume name="TampaInferior">
+      <materialref ref="AcInox"/>
+      <solidref ref="TampaInf"/>
+    </volume>
+    <volume name="CaboAco">
+      <materialref ref="AcInoxCabo"/>
+      <solidref ref="Cabo"/>
+    </volume>
+    <volume name="Fantoma" >
+      <materialref ref="G4_WATER"  />
+      <solidref ref="fantoma" />
+    </volume>
+    <volume name="TOP">
+      <materialref ref="Air"/>
+      <solidref ref="WorldBox"/>
+      <physvol>
+        <volumeref ref="Ir192Core"/>
+        <positionref ref="Origem"/>
+      </physvol>
+      <physvol>
+        <volumeref ref="Capa"/>
+        <positionref ref="OrigemDesl"/>
+      </physvol>
+      <physvol>
+        <volumeref ref="TampaSuperior"/>
+        <positionref ref="Ptsup"/>
+      </physvol>
+      <physvol>
+        <volumeref ref="TampaInferior"/>
+        <positionref ref="PosInf"/>
+      </physvol>
+      <physvol>
+        <volumeref ref="CaboAco"/>
+        <positionref ref="PosCabo"/>
+      </physvol>
+      <physvol>
+        <volumeref ref="Fantoma"/>
+      </physvol>
     </volume>
   </structure>
-    <setup version="1.0" name="Default">
-      <world ref="TOP"/>
-    </setup>
+  <setup version="1.0" name="Default">
+    <world ref="TOP"/>
+  </setup>
 </gdml>

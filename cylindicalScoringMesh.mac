@@ -1,0 +1,23 @@
+########################################
+# define cylindrical scoring mesh
+#
+# IMPORTANT:
+#  Currently, we identify a problem if a track
+# enters the cylindrical mesh at exactly the
+# center of the top/bottom circlic face exactly
+# along the local z-axis of the cylinder.
+# To avoid this, we place the mesh slightly
+# offset from the origin.
+#
+/score/create/cylinderMesh cylinderMesh1
+#
+/score/mesh/cylinderSize 10 1 mm
+/score/mesh/translate/xyz 0.1 0.1 0.05 mm
+/score/mesh/nBin  100 1 1
+#
+/score/quantity/kermaTrackLength kerma
+/score/filter/particle gammaFilter gamma
+#
+/score/close
+#
+/score/list

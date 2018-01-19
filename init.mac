@@ -1,0 +1,19 @@
+# Call visualization macro
+#/control/execute vis.mac
+
+# call scoring macros
+/control/execute boxScoringMesh.mac
+#/control/execute cylindricalMesh.mac
+# call gps source macro
+/control/execute Ir192_TG186.mac
+
+# Run particles
+/control/verbose 2
+/run/verbose 2
+/score/verbose 0
+
+/run/beamOn 10000
+
+# dump scorer to file
+#/score/dumpQuantityToFile boxMesh dose DoseDeposition.csv
+/score/dumpQuantityToFile boxMesh kerma KermaDeposition.csv

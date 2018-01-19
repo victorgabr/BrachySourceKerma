@@ -1,0 +1,10 @@
+# Scoring mesh is used to calculate
+#  the energy deposition in the phantom
+/score/create/boxMesh boxMesh
+# the voxels are 0.25 mm wide.
+/score/mesh/boxSize 5 5 0.125 mm
+/score/mesh/nBin 40 40 1
+
+#/score/quantity/doseDeposit dose
+/score/quantity/kermaTrackLength kerma
+/score/filter/particle gammaFilter gamma

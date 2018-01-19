@@ -1,3 +1,4 @@
+
 // ********************************************************************
 // * License and Disclaimer                                           *
 // *                                                                  *
@@ -41,7 +42,6 @@
 #include "PhysicsList.hh"
 #include "PrimaryGeneratorAction.hh"
 #include "Randomize.hh"
-#include "RunAction.hh"
 #include "globals.hh"
 #ifdef G4UI_USE
 #include "G4UIExecutive.hh"
@@ -51,36 +51,44 @@
 #include "G4VisExecutive.hh"
 #endif
 
+#include "ScoreQuantityMessenger.hh"
+#include <ActionInitialization.hh>
+#include <G4MTRunManager.hh>
+#include <G4ScoringManager.hh>
+#include <ScoreWriter.hh>
 
 int main(int argc, char **argv) {
 
-    CLHEP::HepRandom::setTheEngine(new CLHEP::RanecuEngine);
-    // Set the random number generator manually
+#ifdef G4MULTITHREADED
+    auto *pRunManager = new G4MTRunManager;
+    pRunManager->SetNumberOfThreads(4); // Is equal to 2 by default
+#else
+    auto *pRunManager = new G4RunManager;
+#endif
 
-    G4long myseed = 1;
-    CLHEP::HepRandom::setTheSeed(myseed);
+    G4cout << "***********************" << G4endl;
+    G4cout << "*** " << G4Random::getTheSeed() << " ***" << G4endl;
+    G4cout << "***********************" << G4endl;
+    // Access to the Scoring Manager pointer
+    // Construct the default Scoring Manager singleton object pointer
+    auto *pScoringManager = G4ScoringManager::GetScoringManager();
+    auto *pSQM = new ScoreQuantityMessenger(pScoringManager);
+    pScoringManager->SetScoreWriter(new ScoreWriter());
 
-    // Set mandatory initialization and user action classes
-    const G4String fileName = static_cast<G4String>(argv[1]);
+    G4String fileName = argv[1];
+    auto *detector = new DetectorConstruction(fileName);
 
-    DetectorConstruction *detector = new DetectorConstruction(fileName);
+    pRunManager->SetUserInitialization(detector);
+    pRunManager->SetUserInitialization(new PhysicsList);
 
-    // Start Run manager
-    G4RunManager *runManager = new G4RunManager;
-    runManager->SetUserInitialization(detector);
-    runManager->SetUserInitialization(new PhysicsList);
-    PrimaryGeneratorAction *particleGun = new PrimaryGeneratorAction;
-    runManager->SetUserAction(particleGun);
-    // using output filename
-    RunAction *runAction = new RunAction;
-    runManager->SetUserAction(runAction);
-    runManager->Initialize();
+    auto *actions = new ActionInitialization();
+    pRunManager->SetUserInitialization(actions);
+
+    pRunManager->Initialize();
 
 #ifdef G4VIS_USE
     // Initialize visualization
     G4VisManager *visManager = new G4VisExecutive;
-    // G4VisExecutive can take a verbosity argument - see /vis/verbose guidance.
-    // G4VisManager* visManager = new G4VisExecutive("Quiet");
     visManager->Initialize();
 #endif
 
@@ -91,11 +99,9 @@ int main(int argc, char **argv) {
 #ifdef G4UI_USE
     G4UIExecutive *ui = new G4UIExecutive(argc, argv);
 #ifdef G4VIS_USE
-    //    UImanager->ApplyCommand("/control/execute proton_source.mac");
-    //    G4double en = particleGun->getParticleEnergy();
-    UImanager->ApplyCommand("/control/execute vis.mac");
+    UImanager->ApplyCommand("/control/execute init.mac");
 #else
-    UImanager->ApplyCommand("/control/execute " + macroFilename);
+    UImanager->ApplyCommand("/control/execute vis.mac");
 #endif
     ui->SessionStart();
     delete ui;
@@ -109,7 +115,6 @@ int main(int argc, char **argv) {
 #ifdef G4VIS_USE
     delete visManager;
 #endif
-    delete runManager;
-
+    delete pRunManager;
     return 0;
 }

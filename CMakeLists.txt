@@ -1,25 +1,17 @@
-#----------------------------------------------------------------------------
-# Setup the project
 cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project(BrachySourceKerma)
-
 # Requires C++11 standard
-
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-#-----------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
 # You can set WITH_GEANT4_UIVIS to OFF via the command line or ccmake/cmake-gui
 # to build a batch mode only executable
-#
 option(WITH_GEANT4_UIVIS "Build example with Geant4 UI and Vis drivers" ON)
 if(WITH_GEANT4_UIVIS)
   find_package(Geant4 REQUIRED ui_all vis_all)
 else()
   find_package(Geant4 REQUIRED)
 endif()
-
 #----------------------------------------------------------------------------
 # Setup Geant4 include directories and compile definitions
 # Setup include directory for this project
@@ -41,17 +33,18 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 add_executable(BrachySourceKerma BrachySourceKerma.cc ${sources} ${headers})
 target_link_libraries(BrachySourceKerma ${Geant4_LIBRARIES})
 
-#----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
-# build B1. This is so that we can run the executable directly because it
-# relies on these scripts being in the current working directory.
-#
 set(BrachySourceKerma_SCRIPTS
+  init.mac
   vis.mac
+  cylindicalScoringMesh.mac
+  boxScoringMesh.mac
+  Ir192_TG186.mac
   Gammamed_Plus_Source.gdml
+  data_analysis.py
+  iridium_source_primary.mac
   README.md
   )
-
 foreach(_script ${BrachySourceKerma_SCRIPTS})
   configure_file(
     ${PROJECT_SOURCE_DIR}/${_script}
@@ -67,7 +60,3 @@ endforeach()
 #
 add_custom_target(Kerma DEPENDS BrachySourceKerma)
 
-#----------------------------------------------------------------------------
-# Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
-#
-install(TARGETS BrachySourceKerma DESTINATION bin)

@@ -45,7 +45,7 @@ void ScoreQuantityMessenger::SetNewValue(G4UIcommand *command,
     G4TokenVec token;
     FillTokenVec(newVal, token);
     if (command == qKermaTrackLengthCmd) {
-        if (CheckMeshPS(mesh, token[0])) {
+        if (CheckMeshPS(mesh, token[0], command)) {
             auto *ps = new KermaTrackLength3D(token[0]);
             ps->SetUnit(token[1]);
             mesh->SetPrimitiveScorer(ps);

@@ -24,6 +24,10 @@ Run python script inside build folder.
 
 It reads KermaDeposition.csv file containing the resulted 3D kerma matrix.
 
+## Geometry view
+
+![brachy_source](https://user-images.githubusercontent.com/6777517/57796794-f41c6c00-7716-11e9-811f-bc5598b55ae3.png)
+
 ## Example result:
 
 ![example_result](https://user-images.githubusercontent.com/6777517/35172841-6939db5e-fd50-11e7-9616-74b964d66afe.jpg)

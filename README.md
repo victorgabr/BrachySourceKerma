@@ -1,7 +1,7 @@
 # BrachySourceKerma
 BrachySourceKerma calculates Kerma deposit in a water phantom, produced by a source defined using GDML files.
 
-Validation at my master's degree [dissertation](http://www1.inca.gov.br/pqrt/download/trab/dissertacao_mestrado_victor_gabriel_leandro_alves.pdf) (in Portuguese with english abstract)
+Validation at my master's degree [dissertation](https://docs.bvsalud.org/biblioref/2020/10/935075/estudo_cosimetrico_caracterizacao_victor_gabriel.pdf) (in Portuguese with english abstract)
 
 
 This code used the GDML auxiliary information for associating a sensitive detector to a volume.
